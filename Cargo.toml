@@ -1,0 +1,39 @@
+[package]
+name = "rust_vs_c_asm"
+version = "0.1.0"
+edition = "2021"
+
+# Multiple binaries for different examples
+[[bin]]
+name = "ownership"
+path = "src/rust/ownership.rs"
+
+[[bin]]
+name = "immutable"
+path = "src/rust/immutable.rs"
+
+[[bin]]
+name = "bounds_check"
+path = "src/rust/bounds_check.rs"
+
+[[bin]]
+name = "generics"
+path = "src/rust/generics.rs"
+
+[[bin]]
+name = "threading"
+path = "src/rust/threading.rs"
+
+[[bin]]
+name = "unsafe_hw"
+path = "src/rust/unsafe_hw.rs"
+
+[[bin]]
+name = "recursion"
+path = "src/rust/recursion.rs"
+
+[[bin]]
+name = "pointer"
+path = "src/rust/pointer.rs"
+
+[dependencies] 
