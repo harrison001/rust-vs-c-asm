@@ -1,9 +1,11 @@
-
 # 🦀 Rust vs C: Assembly Deep Dive
 
-A hands-on comparison between Rust and C at the **assembly level**.  
-Explore how **zero-cost abstractions**, **ownership models**, and **type systems** affect real machine code.
+A hands-on comparison between Rust and C at the assembly level.
+Explore how zero-cost abstractions, ownership models, and type systems affect real machine code.
 
+> 📸 **Want the full story with live GDB debugging sessions, assembly screenshots, and real-world commentary?**
+> 👉 [Read the complete article here](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety/)  
+> *(Includes all the annotated GDB screenshots, performance commentary, and the story behind the code.)*
 ---
 
 > 📌 Compare Rust and C in terms of memory safety, pointer behavior, runtime checks, and compiler optimizations — **all at the assembly level**.
@@ -180,7 +182,17 @@ sudo dnf install gcc make -y
 # Build and analyze
 make all
 ```
+*Rust delivers memory and thread safety without sacrificing performance. This project proves it — one assembly line at a time.*
+---
+## 📸 **Full GDB Sessions, Annotated Assembly, and More**
+
+The code in this repo is explained **step-by-step** in my in-depth article:  
+👉 [Rust vs C Assembly: Panic or Segfault? (with GDB analysis)](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety/)
+
+- Complete walkthroughs for every function
+- Assembly screenshots from GDB sessions
+- Real-world systems programming insights
 
 ---
 
-*Rust delivers memory and thread safety without sacrificing performance. This project proves it — one assembly line at a time.*
+*For questions or in-depth discussion, feel free to comment on the blog, or reach out via [LinkedIn](https://www.linkedin.com/in/harrison001/).*
