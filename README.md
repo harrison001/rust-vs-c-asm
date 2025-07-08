@@ -4,7 +4,7 @@ A hands-on comparison between Rust and C at the assembly level.
 Explore how zero-cost abstractions, ownership models, and type systems affect real machine code.
 
 > 📸 **Want the full story with live GDB debugging sessions, assembly screenshots, and real-world commentary?**
-> 👉 [Read the complete article here](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety/)  
+> 👉 [Read the complete article here](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety-analysis/)  
 > *(Includes all the annotated GDB screenshots, performance commentary, and the story behind the code.)*
 ---
 
@@ -187,7 +187,7 @@ make all
 ## 📸 **Full GDB Sessions, Annotated Assembly, and More**
 
 The code in this repo is explained **step-by-step** in my in-depth article:  
-👉 [Rust vs C Assembly: Panic or Segfault? (with GDB analysis)](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety/)
+👉 [Rust vs C Assembly: Panic or Segfault? (with GDB analysis)](https://harrisonsec.com/blog/rust-vs-c-assembly-performance-safety-analysis/)
 
 - Complete walkthroughs for every function
 - Assembly screenshots from GDB sessions
@@ -195,4 +195,4 @@ The code in this repo is explained **step-by-step** in my in-depth article:
 
 ---
 
-*For questions or in-depth discussion, feel free to comment on the blog, or reach out via [LinkedIn](https://www.linkedin.com/in/harrison001/).*
+*For questions or in-depth discussion, feel free to comment on the blog, or reach out via [LinkedIn](https://www.linkedin.com/in/harrisonguo/).*
