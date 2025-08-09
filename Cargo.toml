@@ -2,7 +2,6 @@
 name = "rust_vs_c_asm"
 version = "0.1.0"
 edition = "2021"
-
 # Multiple binaries for different examples
 [[bin]]
 name = "ownership"

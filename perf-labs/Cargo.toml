@@ -1,0 +1,23 @@
+[package]
+name = "rust-perf-demos"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+futures = "0.3"
+
+[[bin]] name = "arc_mutex_slow"        path = "src/bin/arc_mutex_slow.rs"
+[[bin]] name = "arc_mutex_fast"        path = "src/bin/arc_mutex_fast.rs"
+[[bin]] name = "trait_dyn_slow"        path = "src/bin/trait_dyn_slow.rs"
+[[bin]] name = "trait_generic_fast"    path = "src/bin/trait_generic_fast.rs"
+[[bin]] name = "box_alloc_slow"        path = "src/bin/box_alloc_slow.rs"
+[[bin]] name = "vec_contig_fast"       path = "src/bin/vec_contig_fast.rs"
+[[bin]] name = "vec_reserve_slow"      path = "src/bin/vec_reserve_slow.rs"
+[[bin]] name = "vec_reserve_fast"      path = "src/bin/vec_reserve_fast.rs"
+[[bin]] name = "async_microtasks_slow" path = "src/bin/async_microtasks_slow.rs"
+[[bin]] name = "async_batched_fast"    path = "src/bin/async_batched_fast.rs"
+[[bin]] name = "clone_big_slow"        path = "src/bin/clone_big_slow.rs"
+[[bin]] name = "clone_ref_fast"        path = "src/bin/clone_ref_fast.rs"
+[[bin]] name = "refcell_slow"          path = "src/bin/refcell_slow.rs"
+[[bin]] name = "plain_mut_fast"        path = "src/bin/plain_mut_fast.rs"

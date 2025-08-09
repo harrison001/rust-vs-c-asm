@@ -1,0 +1,39 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Rust / Cargo
+target/
+Cargo.lock
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Compiled outputs
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+*.pdb
+
+# IDE / Editor settings
+.vscode/
+.idea/
+*.iml
+
+# Perf / flamegraph outputs
+perf.data
+flamegraph.svg
+flamegraph*.svg
+*.folded
+
+# GDB / Debugger
+.gdb_history
+*.gdb

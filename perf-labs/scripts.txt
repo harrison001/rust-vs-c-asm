@@ -1,0 +1,123 @@
+🎯 视频通用结构
+
+时长：3～5 分钟 / 集
+内容比例：
+	1.	开场吸引（10秒）
+	2.	问题背景（40秒）
+	3.	Rust vs C 对比演示（1分半）
+	4.	汇编级别剖析（1分）
+	5.	性能工具证明（40秒）
+	6.	修复方法 & 结论（20秒）
+
+工具出镜：
+	•	perf（性能采样）
+	•	bpftrace（函数调用统计）
+	•	objdump / cargo asm（汇编对比）
+	•	gdb（寄存器和调用栈细节）
+	•	FlameGraph（函数热点可视化）
+
+⸻
+
+9 个 Rust 性能坑点讲解提纲
+
+⸻
+
+1. 动态分发（trait object） vs 静态分发（泛型）
+	•	问题背景：Rust 的 trait object 类似 C++ 的虚函数表，运行时查找导致额外开销；泛型是编译期展开的，没有查找成本。
+	•	演示：相同逻辑，Rust 动态分发 vs 泛型静态分发 vs C 函数指针。
+	•	汇编剖析：
+	•	动态分发：多了一次 mov 加 jmp [rax]
+	•	静态分发：直接内联，没有额外跳转
+	•	性能证明：perf stat 显示 cycles 增加，FlameGraph 热点落在 vtable 调用处。
+	•	修复：能用泛型就不用 trait object，必要时加 #[inline(always)]。
+
+视频口播模板：
+
+今天我们聊 Rust 里一个经典的性能坑：动态分发。
+看这段代码，用 trait object 实现，结果 CPU 花了 30% 的时间在查 vtable！
+换成泛型，编译器直接展开调用，perf 里 cycles 立马下降。
+所以，能静态分发就别动态分发。
+
+⸻
+
+2. Box / Arc / Rc 的隐藏成本
+	•	背景：堆分配 + 引用计数原子操作，会显著增加延迟。
+	•	演示：Rust Arc<T> vs C malloc/free，对比分配频率与延迟。
+	•	汇编剖析：Rust 会生成 lock inc / lock dec，是原子指令。
+	•	性能证明：perf stat L1/L2 miss 增多，bpftrace 显示 malloc 次数。
+	•	修复：用 &T 或 Box<T> 替代 Arc，减少共享。
+
+视频口播模板：
+
+这个例子展示 Arc 的代价——每次 clone 都是一个原子指令。
+结果？CPU 要停下来等总线同步。
+用 Box 或借用引用，直接消除这个锁开销。
+
+⸻
+
+3. 边界检查（Bounds Check）
+	•	背景：Rust 安全检查会在每次访问切片时插入 cmp + jl，C 不会。
+	•	演示：循环访问数组，Rust 默认 vs Rust unsafe vs C。
+	•	汇编剖析：默认模式多出一个条件跳转指令。
+	•	性能证明：perf stat 分支预测失败率增加。
+	•	修复：提前用 .get_unchecked() 或 iter()。
+
+⸻
+
+4. FFI 边界 / ABI 兼容性
+	•	背景：Rust 默认 ABI 与 C 不完全兼容，跨语言调用可能有栈清理/寄存器不同。
+	•	演示：Rust 调 C 函数（无 extern "C"） vs 有 extern "C"。
+	•	汇编剖析：错误 ABI 导致调用约定不同，可能出错或性能损失。
+	•	性能证明：perf stat cycles 增加，调用栈异常。
+	•	修复：跨语言必须显式 extern "C"。
+
+⸻
+
+5. 默认 panic 策略
+	•	背景：Rust 默认 unwind，会生成额外栈展开代码；C 不会。
+	•	演示：Rust 默认 vs panic = abort，对比二进制大小与调用开销。
+	•	汇编剖析：unwind 版本多了 .gcc_except_table 和调用异常处理。
+	•	性能证明：L1i cache miss 增多。
+	•	修复：生产环境无需要展开时用 panic = abort。
+
+⸻
+
+6. match 与模式匹配优化不足
+	•	背景：Rust match 某些场景不会自动优化为 jump table。
+	•	演示：match 4 个 case vs C switch-case。
+	•	汇编剖析：Rust 编译器生成多条件跳转，C 用跳转表。
+	•	修复：用 #[repr(u8)] enum 或手动优化。
+
+⸻
+
+7. 内存布局（Struct Padding）
+	•	背景：Rust 默认字段顺序会导致 padding；C 可以精确控制。
+	•	演示：测 size_of::<T> 并用 #[repr(C)] 修复。
+	•	汇编剖析：padding 导致 cacheline 浪费。
+	•	性能证明：perf stat 内存带宽浪费，cache miss 增加。
+
+⸻
+
+8. 编译器内联优化缺失
+	•	背景：Rust 对跨 crate 的内联不总是激进。
+	•	演示：跨模块小函数调用，Rust vs C（inline）。
+	•	修复：加 #[inline(always)] 或启用 LTO。
+
+⸻
+
+9. 默认初始化 & Drop
+	•	背景：Rust 会零初始化局部变量并生成 Drop 逻辑，C 不会。
+	•	演示：创建 1M 个 struct 对象，Rust 默认 vs MaybeUninit vs C。
+	•	性能证明：perf stat cycles 和 store 指令增多。
+
+⸻
+
+我可以帮你：
+	1.	把这 9 个坑的 Rust + C 对比代码全写好
+	2.	配套 perf / bpftrace / FlameGraph 生成脚本
+	3.	每个生成一份 HTML 对照火焰图
+	4.	生成一个完整的 YouTube 系列视频脚本包
+
+这样你直接能拍成 《Rust vs C：从汇编到性能的9个真相》 系列。
+
+你要我直接帮你把 代码 + 脚本 + 视频稿全打包 么？这样你一录就行。
