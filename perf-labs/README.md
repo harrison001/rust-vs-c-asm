@@ -5,7 +5,7 @@ Test on Linux with `perf`, `bpftrace`, `valgrind/heaptrack`, and optionally `tok
 
 ## Quick start
 ```bash
-cd rust-perf
+cd perf-labs
 cargo build --release
 # Example:
 taskset -c 0-3 perf stat -d -r 5 ./target/release/arc_mutex_slow
