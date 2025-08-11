@@ -37,3 +37,9 @@ flamegraph*.svg
 # GDB / Debugger
 .gdb_history
 *.gdb
+oop/oop1
+oop/oop2
+oop/oop3
+oop/oop4
+oop/oop5
+perf-labs/scripts.txt
